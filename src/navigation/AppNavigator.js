@@ -5,12 +5,13 @@ import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
+import NewCharacter from '../screens/NewCharacter';
 import { AuthContext } from '../store/AuthContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
-  const { isLoading, userToken } = useContext(AuthContext);
+  const { isLoading, user, userToken } = useContext(AuthContext);
   const [minSplashPassed, setMinSplashPassed] = useState(false);
 
   // Wait for minimum 3 seconds
@@ -26,11 +27,18 @@ export default function AppNavigator() {
     return <SplashScreen />;
   }
 
+  // Debug
+  // console.log(user);
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {userToken ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          user?.avatar_url ? (
+            <Stack.Screen name="Home" component={HomeScreen} />
+          ) : (
+            <Stack.Screen name="NewCharacter" component={NewCharacter} />
+          )
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
