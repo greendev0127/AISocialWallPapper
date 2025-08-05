@@ -4,7 +4,7 @@ import { Text, Button } from 'react-native-paper';
 import { AuthContext } from '../store/AuthContext';
 
 export default function HomeScreen() {
-  const { logout, user, userToken } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
 
   const signOut = async () => {
     await logout();
